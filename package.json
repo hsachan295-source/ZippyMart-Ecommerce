@@ -1,0 +1,19 @@
+{
+  "name": "zippymart",
+  "version": "1.0.0",
+  "description": "Enterprise-grade AI-powered grocery delivery platform named ZippyMart with 7 ML engines.",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:ml": "cd ml_service && .\\venv\\Scripts\\uvicorn app.main:app --reload --port 8000",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run dev:ml\"",
+    "seed": "cd backend && node scripts/seed.js"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "author": "Antigravity AI Pair Programmer",
+  "license": "MIT"
+}
