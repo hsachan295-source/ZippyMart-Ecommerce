@@ -33,6 +33,25 @@ export default function App() {
   const [locationError, setLocationError] = useState(null);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
 
+  // Wishlist state — persisted in localStorage
+  const [wishlist, setWishlist] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('zippymart_wishlist') || '[]'); }
+    catch { return []; }
+  });
+
+  const toggleWishlist = (product) => {
+    setWishlist(prev => {
+      const exists = prev.some(p => p._id === product._id || p.id === product.id);
+      const next = exists
+        ? prev.filter(p => p._id !== product._id && p.id !== product.id)
+        : [...prev, product];
+      localStorage.setItem('zippymart_wishlist', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const isWishlisted = (productId) => wishlist.some(p => p._id === productId || p.id === productId);
+
   const detectLocation = () => {
     if (!navigator.geolocation) {
       setLocationError("Geolocation is not supported by your browser.");
@@ -319,10 +338,23 @@ export default function App() {
       {/* 2. Main Page Render viewport */}
       <main class="flex-1 max-w-7xl w-full mx-auto px-6 pt-8">
         {page === 'catalog' && (
-          <Catalog setPage={setPage} setSelectedProductId={setSelectedProductId} />
+          <Catalog
+            setPage={setPage}
+            setSelectedProductId={setSelectedProductId}
+            wishlist={wishlist}
+            toggleWishlist={toggleWishlist}
+            isWishlisted={isWishlisted}
+          />
         )}
         {page === 'product-detail' && (
-          <ProductDetail productId={selectedProductId} setPage={setPage} setSelectedProductId={setSelectedProductId} />
+          <ProductDetail
+            productId={selectedProductId}
+            setPage={setPage}
+            setSelectedProductId={setSelectedProductId}
+            wishlist={wishlist}
+            toggleWishlist={toggleWishlist}
+            isWishlisted={isWishlisted}
+          />
         )}
         {page === 'order-history' && (
           <OrderHistory setPage={setPage} setSelectedOrderId={setSelectedOrderId} />

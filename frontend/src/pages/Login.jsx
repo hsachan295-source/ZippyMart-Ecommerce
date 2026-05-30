@@ -41,10 +41,18 @@ export default function Login({ setPage }) {
 
       <div class="w-full max-w-md glass-panel p-8 rounded-3xl relative z-10 border border-white/10 shadow-2xl">
         <div class="text-center mb-8">
-          <div class="inline-flex p-3 rounded-2xl bg-emerald-500/10 text-emerald-400 mb-3 border border-emerald-500/20">
-            <ShieldCheck class="w-8 h-8" />
+          <div class="inline-flex items-center gap-2 justify-center mb-3">
+            <span class="p-2 rounded-xl bg-gradient-to-tr from-emerald-500 to-violet-500 text-white shadow-md">
+              <ShieldCheck class="w-6 h-6" />
+            </span>
+            <div class="text-left">
+              <span class="font-extrabold text-2xl tracking-tight text-white block">
+                Zippy<span class="text-emerald-400">Mart</span>
+              </span>
+              <span class="text-[9px] font-black text-violet-400 tracking-widest uppercase block -mt-0.5">AI Grocery Platform</span>
+            </div>
           </div>
-          <h2 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-400 to-violet-400 bg-clip-text text-transparent">
+          <h2 class="text-xl font-bold text-gray-200 mt-2">
             Welcome back!
           </h2>
           <p class="text-gray-400 text-sm mt-1">Sign in to experience AI Grocery Intelligence</p>

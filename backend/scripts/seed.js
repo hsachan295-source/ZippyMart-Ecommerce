@@ -4,9 +4,9 @@ import { DB, saveLocalDb } from '../config/db.js';
 export const runSeed = async () => {
   try {
     const existingProducts = await DB.Products.find();
-    // If database already contains a scaled catalog of 500+ items, skip seeding
-    if (existingProducts.length > 500) {
-      console.log('Database already populated with scaled 500+ catalog. Skipping seeding.');
+    // If database already contains a scaled catalog of 580+ items, skip seeding
+    if (existingProducts.length >= 580) {
+      console.log('Database already populated with scaled 580+ catalog. Skipping seeding.');
       return;
     }
 
@@ -466,30 +466,38 @@ export const runSeed = async () => {
       seededProducts.push(smartphone);
     }
 
-    // 8. Seed Electronics (Tablets & Accessories) (50 products)
-    console.log('Seeding Electronics Accessories...');
+    // 8. Seed Electronics (Tablets & Accessories) (100 products - Standard & Pro variants)
+    console.log('Seeding Electronics Accessories (100 items)...');
     for (let i = 0; i < electronicsList.length; i++) {
       const item = electronicsList[i];
-      const discountRate = (i % 5) === 0 ? 5 : (i % 5) === 3 ? 15 : 0;
-      const origPrice = discountRate > 0 ? Math.round(item.price / (1 - (discountRate/100))) : item.price;
-      const accessory = {
-        _id: `prod_electronics_${i}`,
-        name: item.name,
-        description: `${item.desc} Engineered with premium materials, ensuring seamless daily durability and state-of-the-art visual or sonic precision.`,
-        price: item.price,
-        originalPrice: origPrice,
-        category: 'Electronics',
-        image: item.img,
-        stock: 15 + (i % 25),
-        rating: parseFloat((4.0 + (i % 10) * 0.1).toFixed(1)),
-        unit: '1 Unit',
-        discount: discountRate,
-        brand: item.brand,
-        reviewCount: 2 + (i % 3),
-        deliveryTime: 'Next Day'
-      };
-      await DB.Products.create(accessory);
-      seededProducts.push(accessory);
+      for (let v = 0; v < 2; v++) {
+        const isPro = v === 1;
+        const finalName = isPro ? `${item.name} (Pro Edition)` : item.name;
+        const discountRate = isPro ? 12 : ((i % 5) === 0 ? 5 : (i % 5) === 3 ? 15 : 0);
+        const finalPrice = isPro ? Math.round(item.price * 1.25) : item.price;
+        const origPrice = discountRate > 0 ? Math.round(finalPrice / (1 - (discountRate/100))) : finalPrice;
+
+        const accessory = {
+          _id: `prod_electronics_${i}_v${v}`,
+          name: finalName,
+          description: isPro 
+            ? `Upgraded Pro Edition. ${item.desc} Engineered with premium materials, ensuring extreme performance, enhanced daily durability, and state-of-the-art precision.`
+            : `${item.desc} Engineered with premium materials, ensuring seamless daily durability and state-of-the-art visual or sonic precision.`,
+          price: finalPrice,
+          originalPrice: origPrice,
+          category: 'Electronics',
+          image: item.img,
+          stock: isPro ? 8 + (i % 10) : 15 + (i % 25),
+          rating: parseFloat((isPro ? Math.min(5.0, 4.2 + (i % 9) * 0.1) : (4.0 + (i % 10) * 0.1)).toFixed(1)),
+          unit: '1 Unit',
+          discount: discountRate,
+          brand: item.brand,
+          reviewCount: isPro ? 3 + (i % 4) : 2 + (i % 3),
+          deliveryTime: 'Next Day'
+        };
+        await DB.Products.create(accessory);
+        seededProducts.push(accessory);
+      }
     }
 
     // 9. Seed Household Essentials (100 products)
