@@ -181,7 +181,8 @@ export default function App() {
       }
 
       // Query FastAPI ML chat engine
-      const res = await axios.post('http://127.0.0.1:8000/api/ml/chat', {
+      const mlBaseUrl = import.meta.env.VITE_ML_URL || 'http://127.0.0.1:8000';
+      const res = await axios.post(`${mlBaseUrl}/api/ml/chat`, {
         query: userMsg,
         userId: user?._id || 'anonymous',
         orderHistory: orderList
