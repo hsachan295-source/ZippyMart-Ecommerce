@@ -1261,13 +1261,13 @@
     {
       "_id": "prod_veggies_8_v0",
       "createdAt": "2026-05-30T11:49:36.399Z",
-      "updatedAt": "2026-05-30T11:49:36.399Z",
+      "updatedAt": "2026-05-30T12:00:09.495Z",
       "name": "Fresh Capsicum",
       "description": "Daily harvested fresh farm Capsicum. Crisp green bell peppers (capsicum).",
       "price": 45,
       "originalPrice": 45,
       "image": "https://images.unsplash.com/photo-1563565312-82c2179b92e2?w=500&auto=format&fit=crop&q=60",
-      "stock": 53,
+      "stock": 52,
       "rating": 4.9,
       "unit": "250 g",
       "discount": 0,
@@ -10636,6 +10636,44 @@
       "deliveryCoordinates": {
         "lat": 28.615291449353094,
         "lng": 77.21726876004031
+      },
+      "etaMinutes": 10
+    },
+    {
+      "_id": "ord_xfps81cll",
+      "createdAt": "2026-05-30T12:00:09.500Z",
+      "updatedAt": "2026-05-30T12:00:09.500Z",
+      "user": "usr_premium",
+      "orderItems": [
+        {
+          "productId": "prod_veggies_8_v0",
+          "name": "Fresh Capsicum",
+          "price": 45,
+          "category": "Vegetables",
+          "image": "https://images.unsplash.com/photo-1563565312-82c2179b92e2?w=500&auto=format&fit=crop&q=60",
+          "unit": "250 g",
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": "Hindon Vihar, Noida, Uttar Pradesh",
+      "paymentMethod": "Razorpay",
+      "itemsPrice": 45,
+      "taxPrice": 2,
+      "shippingPrice": 15,
+      "totalPrice": 62,
+      "isPaid": true,
+      "paidAt": "2026-05-30T12:00:09.500Z",
+      "paymentResult": {
+        "id": "pay_razorpay_vums1n6sz",
+        "status": "success",
+        "update_time": "2026-05-30T12:00:09.500Z",
+        "email_address": "user@grocery.com"
+      },
+      "isDelivered": false,
+      "deliveryStatus": "Processing",
+      "deliveryCoordinates": {
+        "lat": 28.62356866482493,
+        "lng": 77.21628742306106
       },
       "etaMinutes": 10
     }
